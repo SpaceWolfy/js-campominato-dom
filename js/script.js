@@ -29,6 +29,8 @@ function defineSquare(elementBox, num, boxcontainer, gridnumWin){
 Tale funzione permette non solo di definire il colore dei "pezzi di campo" cliccati dall'utente, ma
 anche di determinare le condizioni di vittoria o sconfitta in base a tali colori
 */
+let winCond = document.getElementsByClassName("azure");
+
 function colorSquare(element, arrNumber, GridNum) {
     element.addEventListener('click', function() {
         console.log(this); 
@@ -40,17 +42,20 @@ function colorSquare(element, arrNumber, GridNum) {
             this.classList.add('red');
             boolValue = true
             if(boolValue) {
-                if (confirm("Hai perso, vuoi tornare al menù di scelta della difficoltà?")) {
+                if (confirm("Hai perso, hai scoperto un totale di " + winCond.length + " zone sicure, clicca 'Ok' per tornare al menù principale")) {
                     outputHtml.innerHTML = ''
+                } else {
+                    alert('Hai cliccato "annulla", continua la tua partita fino a vincerla o seleziona un livello per far ripartire il gioco');
                 };
             };
         };
 
         //win condition:
-        let winCond = document.getElementsByClassName("azure");
         if (winCond.length === GridNum) {
-            if (confirm("Hai vinto, vuoi tornare al menù di scelta della difficoltà?")) {
+            if (confirm("Hai vinto! Hai scoperto tutte le zone sicure(" + winCond.length + "), vuoi tornare al menù di scelta della difficoltà?")) {
             outputHtml.innerHTML = ''
+            } else {
+                alert('Hai cliccato "annulla", analizza la tua partita o seleziona un livello per far ripartire il gioco');
             };
         };
     });
