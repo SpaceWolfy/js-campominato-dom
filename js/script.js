@@ -35,12 +35,11 @@ function colorSquare(element, arrNumber, GridNum) {
     element.addEventListener('click', function() {
         console.log(this); 
         this.classList.add('azure'); 
-        let boolValue = false;
         //se la griglia condivide con l'array un numero, l'if sottostante permette di colorare il quadrato relativo al numero specifico di rosso
         if(arrayNum.includes(arrNumber)) {
             this.classList.remove('azure');
             this.classList.add('red');
-            boolValue = true
+            let boolValue = true;
             if(boolValue) {
                 if (confirm("Hai perso, hai scoperto un totale di " + winCond.length + " zone sicure, clicca 'Ok' per tornare al menù principale")) {
                     outputHtml.innerHTML = ''
