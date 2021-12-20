@@ -16,13 +16,16 @@ function randomMine (minGridNum, maxGridNum) {
     console.log(arrayNum.sort(function(a, b){return a-b}));
 };
 
+let square;
 //Creo una funzione che andrò a richiamare nelle funzioni sottostanti,
 //questa funzione mi permette di definire le caratteristiche dei quadrati prima di andarli a creare
-function defineSquare(elementBox, num, boxcontainer, gridnumWin){
-    elementBox.innerHTML = num;
-    boxcontainer.append(elementBox);
+function defineSquare(num, boxcontainer, gridnumWin){
+    square = document.createElement('div')
+    square.className = 'pezzo-di-campo';
+    square.innerHTML = num;
+    boxcontainer.append(square);
     gridnumWin;
-    colorSquare(elementBox, num, gridnumWin);
+    colorSquare(square, num, gridnumWin);
 };
 
 /* 
@@ -62,23 +65,8 @@ function colorSquare(element, arrNumber, GridNum) {
 
 //le tre funzioni sottostanti racchiudono quelle soprastanti,
 //queste tre funzioni si occupano di definire come i quadrati verranno stampati
-function createNewSquareNoob(container, number) {
-    const square = document.createElement('div');
-    square.className = 'pezzo-di-campo';
-    defineSquare(square, number, container, 84);
-
-};
-
-function createNewSquarePro(container, number) {
-    const square = document.createElement('div');
-    square.className = 'pezzo-di-campo-pro';
-    defineSquare(square, number, container, 65);
-};
-
-function createNewSquareHacker(container, number) {
-    const square = document.createElement('div');
-    square.className = 'pezzo-di-campo-hacker';
-    defineSquare(square, number, container, 33);
+function createNewSquare(container, number, gridnumWin) {
+    defineSquare(number, container, gridnumWin);
 };
 /* -------------------------------------------- */
 
@@ -99,7 +87,8 @@ btnNoob.addEventListener('click', function(){
     outputHtml.innerHTML = '' //serve a resettare la griglia quando si passa da un pulsante all'altro
     for(let i = 0; i < 100; i++) { 
         //permette di stampare i quadrati e dei numeri rappresentativi della casella al loro interno
-        createNewSquareNoob(outputHtml, i+1);
+        createNewSquare(outputHtml, i+1, 84);
+        square.className = 'pezzo-di-campo';
     };
     randomMine(1, 100);
 });
@@ -108,7 +97,8 @@ btnPro.addEventListener('click', function(){
     outputHtml.innerHTML = ''
     outputHtml.classList.add('display-flex');
     for(let i = 0; i < 81; i++) {
-        createNewSquarePro(outputHtml, i+1);
+        createNewSquare(outputHtml, i+1, 65);
+        square.className = 'pezzo-di-campo-pro';
     };
     randomMine(1, 81);
 });
@@ -117,7 +107,8 @@ btnHacker.addEventListener('click', function(){
     outputHtml.innerHTML = ''
     outputHtml.classList.add('display-flex');
     for(let i = 0; i < 49; i++) {
-        createNewSquareHacker(outputHtml, i+1);
+        createNewSquare(outputHtml, i+1, 33);
+        square.className = 'pezzo-di-campo-hacker';
     };
     randomMine(1, 49);
 });
