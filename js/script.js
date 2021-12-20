@@ -2,7 +2,9 @@
 function getNum(min, max) {
     return Math.floor(Math.random() * (max - min + min) + min);
 };
+
 let arrayNum = [];
+
 function randomMine (minGridNum, maxGridNum) {
     arrayNum = [];
     while(arrayNum.length < 16) {
@@ -11,28 +13,46 @@ function randomMine (minGridNum, maxGridNum) {
             arrayNum.push(randomNumber);
         };
     };
-    console.log(arrayNum);
+    console.log(arrayNum.sort(function(a, b){return a-b}));
 };
-
 
 //Creo una funzione che andrò a richiamare nelle funzioni sottostanti,
 //questa funzione mi permette di definire le caratteristiche dei quadrati prima di andarli a creare
-function defineSquare(elementBox, num, boxcontainer){
+function defineSquare(elementBox, num, boxcontainer, gridnumWin){
     elementBox.innerHTML = num;
     boxcontainer.append(elementBox);
-    colorSquare(elementBox, num);
+    gridnumWin;
+    colorSquare(elementBox, num, gridnumWin);
 };
 
-//questa funzione mi permette di colorare il quadrato premuto (this) di azzurro (codice css)
-function colorSquare(element, arrNumber) {
+/* 
+Tale funzione permette non solo di definire il colore dei "pezzi di campo" cliccati dall'utente, ma
+anche di determinare le condizioni di vittoria o sconfitta in base a tali colori
+*/
+function colorSquare(element, arrNumber, GridNum) {
     element.addEventListener('click', function() {
         console.log(this); 
         this.classList.add('azure'); 
+        let boolValue = false;
         //se la griglia condivide con l'array un numero, l'if sottostante permette di colorare il quadrato relativo al numero specifico di rosso
         if(arrayNum.includes(arrNumber)) {
             this.classList.remove('azure');
             this.classList.add('red');
-        }
+            boolValue = true
+            if(boolValue) {
+                if (confirm("Hai perso, vuoi tornare al menù di scelta della difficoltà?")) {
+                    outputHtml.innerHTML = ''
+                };
+            };
+        };
+
+        //win condition:
+        let winCond = document.getElementsByClassName("azure");
+        if (winCond.length === GridNum) {
+            if (confirm("Hai vinto, vuoi tornare al menù di scelta della difficoltà?")) {
+            outputHtml.innerHTML = ''
+            };
+        };
     });
 }
 
@@ -41,19 +61,20 @@ function colorSquare(element, arrNumber) {
 function createNewSquareNoob(container, number) {
     const square = document.createElement('div');
     square.className = 'pezzo-di-campo';
-    defineSquare(square, number, container);
+    defineSquare(square, number, container, 84);
+
 };
 
 function createNewSquarePro(container, number) {
     const square = document.createElement('div');
     square.className = 'pezzo-di-campo-pro';
-    defineSquare(square, number, container);
+    defineSquare(square, number, container, 65);
 };
 
 function createNewSquareHacker(container, number) {
     const square = document.createElement('div');
     square.className = 'pezzo-di-campo-hacker';
-    defineSquare(square, number, container);
+    defineSquare(square, number, container, 33);
 };
 /* -------------------------------------------- */
 
